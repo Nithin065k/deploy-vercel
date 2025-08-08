@@ -1,28 +1,23 @@
-import "./App.css";
+import React from 'react'
+import Nav from './components/Nav'
+import Hero from './components/Hero'
+import Categories from './components/Categories'
+import Deals from './components/Deals'
+import Gallery from './components/Gallery'
+import Footer from './components/Footer'
+import "./App.css"
 
-function App() {
+export default function App(){
   return (
-    <div className="container">
-      <header>
-        <h1>🚀 My Simple React Site</h1>
-      </header>
-
+    <div className="app">
+      <Nav />
       <main>
-        <p>
-          Welcome to my deployed React site!  
-          This is a single-page example ready for Vercel.
-        </p>
-
-        <button onClick={() => alert("Hello from React!")}>
-          Click Me
-        </button>
+        <Hero />
+        <Categories />
+        <Deals />
+        <Gallery />
       </main>
-
-      <footer>
-        <p>© 2025 My React Site</p>
-      </footer>
+      <Footer />
     </div>
-  );
+  )
 }
-
-export default App;
