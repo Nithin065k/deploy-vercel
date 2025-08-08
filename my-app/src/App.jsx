@@ -1,23 +1,46 @@
-import React from 'react'
-import Nav from './components/Nav'
-import Hero from './components/Hero'
-import Categories from './components/Categories'
-import Deals from './components/Deals'
-import Gallery from './components/Gallery'
-import Footer from './components/Footer'
-import "./App.css"
+import React, { useState, useEffect } from 'react'
+import AuthForm from './components/AuthForm'
+import MoodSelector from './components/MoodSelector'
 
-export default function App(){
+
+
+const API = import.meta.env.VITE_API || 'http://localhost:5000'
+
+export default function App() {
+  const [user, setUser] = useState(() => {
+    const raw = localStorage.getItem('mood_user')
+    return raw ? JSON.parse(raw) : null
+  })
+
+  useEffect(() => {
+    if (user) localStorage.setItem('mood_user', JSON.stringify(user))
+    else localStorage.removeItem('mood_user')
+  }, [user])
+
   return (
     <div className="app">
-      <Nav />
-      <main>
-        <Hero />
-        <Categories />
-        <Deals />
-        <Gallery />
+      <header className="hero">
+        <h1>Mood to Music 🎵</h1>
+        <p>Pick your mood — get a playlist instantly</p>
+      </header>
+
+      <main className="card">
+        {!user ? (
+          <AuthForm onAuth={(u) => setUser(u)} apiBase={API} />
+        ) : (
+          <>
+            <div className="welcome">
+              <strong>Welcome, {user.user.name}!</strong>
+              <button className="link-btn" onClick={() => setUser(null)}>Logout</button>
+            </div>
+            <MoodSelector token={user.token} apiBase={API} />
+          </>
+        )}
       </main>
-      <Footer />
+
+      <footer className="footer">
+        <small>Made with ❤️ — pick a mood and vibe</small>
+      </footer>
     </div>
   )
 }
