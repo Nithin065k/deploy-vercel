@@ -4,7 +4,7 @@ import MoodSelector from './components/MoodSelector'
 
 
 
-const API = import.meta.env.VITE_API || 'http://localhost:5000'
+const API = import.meta.env.VITE_API || 'https://deploy-vercel.onrender.com'
 
 export default function App() {
   const [user, setUser] = useState(() => {
